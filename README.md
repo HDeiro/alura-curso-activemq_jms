@@ -1,0 +1,1 @@
+Observação: É *necessário* adicionar o arquivo activemq-all-[versão].jar no projeto dentro de uma pasta lib no mesmo nível de src. Além disso, esse jar deve ser adicionado ao build path.
