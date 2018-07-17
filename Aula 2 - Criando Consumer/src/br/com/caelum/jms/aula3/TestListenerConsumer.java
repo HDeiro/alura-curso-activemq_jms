@@ -14,6 +14,7 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
 public class TestListenerConsumer {
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
 		/** INITIALIZATION */
 		// Initialize the context to get properties set on jndi.properties file
@@ -31,14 +32,19 @@ public class TestListenerConsumer {
 		/** CONSUMER INFO */
 		// Create a consumer
 		MessageConsumer consumer = session.createConsumer(queue);
-
+		
+		/** !Important
+		 * 	
+		 * Note that for multiple instances of consumers the JMS will distribute the
+		 * messages. A same message will never be delivered to multiple consumers.
+		 * */
 		// Create an anonymous class implementing MessageListener Interface
 		consumer.setMessageListener(new MessageListener() {
 			@Override
 			public void onMessage(Message message) {
 				// Subclass of message to deal with text messages
 				TextMessage textMessage = (TextMessage) message;
-				
+
 				try {
 					System.out.println("Recebendo Mensagem: " + textMessage.getText());
 				} catch (JMSException e) {
